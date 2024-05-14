@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component    = 'tool_newreservedwords';
 $plugin->release      = '1.0';
-$plugin->version      = 2022112800;
-$plugin->requires     = 2024051000.00;
+$plugin->version      = 2024051400;
+$plugin->requires     = 2022112800.00;
 $plugin->supported    = [401, 405];
 $plugin->maturity     = MATURITY_STABLE;

@@ -15,25 +15,26 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TODO describe file index
+ * Install script for New reserved words
+ *
+ * Documentation: {@link https://moodledev.io/docs/guides/upgrade}
  *
  * @package    tool_newreservedwords
  * @copyright  2024 Marina Glancy
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require('../../../config.php');
+/**
+ * Executed on installation of New reserved words
+ *
+ * @return bool
+ */
+function xmldb_tool_newreservedwords_install() {
+    global $DB;
+    $dbman = $DB->get_manager();
 
-require_login();
-
-$url = new moodle_url('/admin/tool/newreservedwords/index.php', []);
-$PAGE->set_url($url);
-$PAGE->set_context(context_system::instance());
-
-$PAGE->set_heading($SITE->fullname);
-echo $OUTPUT->header();
-print_object($DB->get_records('tool_newreservedwords'));
-$columncontenttype = $DB->get_manager()->generator->getEncQuoted('content_type');
-print_object($DB->get_records_sql("SELECT id, $columncontenttype FROM {tool_newreservedwords}
-    WHERE $columncontenttype IS NOT NULL"));
-echo $OUTPUT->footer();
+    $columncontenttype = $dbman->generator->getEncQuoted('content_type');
+    $DB->execute("INSERT INTO {tool_newreservedwords} ($columncontenttype) ".
+        "VALUES (?)", [2, 3]);
+    return true;
+}
